@@ -1,7 +1,9 @@
-*~
 backups/
+savefiles/
 elpa/
 auto-save-list/
 tutorial/
-places
 
+*~
+myinit.el
+projectile-bookmarks.eld

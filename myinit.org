@@ -1,4 +1,4 @@
-#+STARTUP: overview 
+#+STARTUP:  showall 
 #+PROPERTY: header-args :comments yes :results silent
 
 * repos
@@ -33,11 +33,56 @@
 (global-set-key (kbd "<f5>") 'revert-buffer)
 #+END_SRC
 
-* file locations
+* savefiles directory
+  - common directory for saveplace and recentf
 #+BEGIN_SRC emacs-lisp
-;; When you visit a file, point goes to the last place where it was when you previously visited the same file.
-(save-place-mode 1)
-(setq save-place-file (concat user-emacs-directory "places"))
+(defconst savefiles-dir (expand-file-name "savefiles" user-emacs-directory))
+#+END_SRC
+
+* saveplace
+  - Remembers your location in a file when saving files
+#+BEGIN_SRC emacs-lisp
+(use-package saveplace
+  :config (progn
+            (setq save-place-file (expand-file-name "saveplace" savefiles-dir))
+            (save-place-mode 1)))
+#+END_SRC
+
+* recentf
+#+BEGIN_SRC emacs-lisp
+(use-package recentf
+  :bind   ("C-x C-r" . recentf-open-files)
+  :config (progn
+            (setq recentf-save-file (expand-file-name "recentf" savefiles-dir))
+            (setq recentf-max-menu-items 25)
+            (recentf-mode 1)))
+#+END_SRC
+
+* projectile
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :bind-keymap ("C-c p" . projectile-command-map)
+  :config (progn 
+            (setq projectile-sort-order 'recentf)
+            (projectile-mode 1)))
+#+END_SRC
+
+* neotree
+#+BEGIN_SRC emacs-lisp
+(use-package neotree
+  :bind   ("M-n" . neotree-toggle)
+  ;; jump to the current file node on opening
+  :init   (setq neo-smart-open t)
+  :config (progn
+            (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+            (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+            (evil-define-key 'normal neotree-mode-map (kbd "c") 'neotree-create-node)
+            (evil-define-key 'normal neotree-mode-map (kbd "r") 'neotree-rename-node)
+            (evil-define-key 'normal neotree-mode-map (kbd "d") 'neotree-delete-node)
+            (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+            (evil-define-key 'normal neotree-mode-map (kbd "j") 'neotree-next-line)
+            (evil-define-key 'normal neotree-mode-map (kbd "k") 'neotree-previous-line)
+            (evil-define-key 'normal neotree-mode-map (kbd "h") 'neotree-hidden-file-toggle)))
 #+END_SRC
 
 * lisp
@@ -129,6 +174,12 @@
   :bind (("C-x g" . magit-status)))
 #+END_SRC
 
+* company
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :config (add-hook 'after-init-hook 'global-company-mode))
+#+END_SRC
+
 * uuidgen  
 #+BEGIN_SRC emacs-lisp
 (use-package uuidgen)
@@ -149,3 +200,8 @@
 (use-package markdown-mode)
 #+END_SRC
 
+* theme
+#+BEGIN_SRC emacs-lisp
+(use-package zenburn-theme
+  :config (load-theme 'zenburn t))
+#+END_SRC
