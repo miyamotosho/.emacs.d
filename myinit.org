@@ -1,0 +1,151 @@
+#+STARTUP: overview 
+#+PROPERTY: header-args :comments yes :results silent
+
+* repos
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+#+END_SRC
+
+* interface tweaks
+#+BEGIN_SRC emacs-lisp
+;; Do not show the startup message
+(setq inhibit-startup-message t)
+
+;; Always ask y-or-n-p
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; Turn off the menubar, toolbar, and scroll-bars
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(horizontal-scroll-bar-mode -1)
+
+;; Prevent Extraneous Tabs
+(setq-default indent-tabs-mode nil)
+#+END_SRC
+
+* backups
+#+BEGIN_SRC emacs-lisp
+;; Store backups in ~/.emacs.d/backups/
+(setq backup-directory-alist `(("." . ,(concat user-emacs-directory "backups"))))
+
+;; Revert the changes and go back to the saved version of the file
+(global-set-key (kbd "<f5>") 'revert-buffer)
+#+END_SRC
+
+* file locations
+#+BEGIN_SRC emacs-lisp
+;; When you visit a file, point goes to the last place where it was when you previously visited the same file.
+(save-place-mode 1)
+(setq save-place-file (concat user-emacs-directory "places"))
+#+END_SRC
+
+* lisp
+#+BEGIN_SRC emacs-lisp
+;; Allow one to see matching pairs of parentheses and other characters
+(show-paren-mode 1)
+#+END_SRC
+
+* exec-path-from-shell
+#+BEGIN_SRC emacs-lisp
+;; Copy $PATH from the user's shell
+(use-package exec-path-from-shell
+  :if     (memq window-system '(mac ns x))
+  :config (exec-path-from-shell-initialize))
+#+END_SRC
+
+* bind-key
+#+BEGIN_SRC emacs-lisp
+;; M-x describe-personal-keybindings
+(use-package bind-key)
+#+END_SRC
+
+* which-key
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :config (which-key-mode))
+#+END_SRC
+
+* try
+#+BEGIN_SRC emacs-lisp
+;; M-x try
+(use-package try)
+#+END_SRC
+
+* undo-tree
+#+BEGIN_SRC emacs-lisp
+(use-package undo-tree
+  :config (global-undo-tree-mode))
+#+END_SRC
+
+* evil
+#+BEGIN_SRC emacs-lisp
+;; requires goto-chg and undo-tree
+;; Use C-z to switch among <E> emacs-mode <N> normal-mode <I> insert-mode
+(use-package evil
+  :config (evil-mode 1))
+#+END_SRC
+
+* evil-nerd-commenter
+#+BEGIN_SRC emacs-lisp
+;; comment/uncomment lines
+;; "M-:" in all modes and ",cl" in <E>
+(use-package evil-nerd-commenter
+  :config (evilnc-default-hotkeys))
+#+END_SRC
+
+* smartparens
+#+BEGIN_SRC emacs-lisp
+(use-package smartparens
+  :config (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode))
+#+END_SRC
+
+* rainbow-delimiters
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-delimiters
+  :init (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode))
+#+END_SRC
+
+* aggressive-indent  
+#+BEGIN_SRC emacs-lisp
+;; Add the following to :config to avoid this application
+;; (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+(use-package aggressive-indent
+  :config (global-aggressive-indent-mode 1))
+#+END_SRC
+
+* clojure-mode  
+#+BEGIN_SRC emacs-lisp
+(use-package clojure-mode
+  :config (progn
+            (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+            (add-hook 'clojure-mode-hook 'smartparens-strict-mode)
+            (add-hook 'clojure-mode-hook 'aggressive-indent-mode)))
+#+END_SRC
+
+* magit  
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+  :bind (("C-x g" . magit-status)))
+#+END_SRC
+
+* uuidgen  
+#+BEGIN_SRC emacs-lisp
+(use-package uuidgen)
+#+END_SRC
+
+* multiple-cursors  
+#+BEGIN_SRC emacs-lisp
+(use-package multiple-cursors)
+#+END_SRC
+
+* web-mode 
+#+BEGIN_SRC emacs-lisp
+(use-package web-mode)
+#+END_SRC
+
+* markdown-mode 
+#+BEGIN_SRC emacs-lisp
+(use-package markdown-mode)
+#+END_SRC
+
