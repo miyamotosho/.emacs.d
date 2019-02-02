@@ -1,4 +1,4 @@
-#+STARTUP:  showall 
+#+STARTUP:  overview
 #+PROPERTY: header-args :comments yes :results silent
 
 * repos
@@ -7,21 +7,41 @@
 #+END_SRC
 
 * interface tweaks
+  - Do not show the startup message
 #+BEGIN_SRC emacs-lisp
-;; Do not show the startup message
 (setq inhibit-startup-message t)
+#+END_SRC
 
-;; Always ask y-or-n-p
+  - Always ask y-or-n-p
+#+BEGIN_SRC emacs-lisp
 (fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
 
-;; Turn off the menubar, toolbar, and scroll-bars
+  - Turn off the menubar, toolbar, and scroll-bars
+#+BEGIN_SRC emacs-lisp
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (horizontal-scroll-bar-mode -1)
+#+END_SRC
 
-;; Prevent Extraneous Tabs
+  - Prevent Extraneous Tabs
+#+BEGIN_SRC emacs-lisp
 (setq-default indent-tabs-mode nil)
+#+END_SRC
+ 
+  - Increase font size
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'default nil
+                    :height (+ (face-attribute 'default :height) 30))
+#+END_SRC
+
+  - fill-column-indicator
+#+BEGIN_SRC emacs-lisp
+(use-package fill-column-indicator
+  :config (progn
+            (setq fci-rule-color "#EFEFAF")
+            (add-hook 'after-change-major-mode-hook 'fci-mode)))
 #+END_SRC
 
 * backups
@@ -59,13 +79,31 @@
 #+END_SRC
 
 * projectile
-#+BEGIN_SRC emacs-lisp
-(use-package projectile
-  :bind-keymap ("C-c p" . projectile-command-map)
-  :config (progn 
-            (setq projectile-sort-order 'recentf)
-            (projectile-mode 1)))
-#+END_SRC
+  #+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :bind-keymap ("C-c p" . projectile-command-map)
+    :config (progn 
+              (setq projectile-sort-order 'recentf)
+              (projectile-mode 1)))
+  #+END_SRC
+
+* helm
+# #+BEGIN_SRC emacs-lisp
+#   (use-package helm
+#     :bind   ("C-x C-f" . helm-find-files)
+#     :config (helm-mode 1))
+# #+END_SRC
+
+* helm-projectile
+# #+BEGIN_SRC emacs-lisp
+# (use-package helm-projectile
+#   :diminish projectile-mode
+#   :bind ("C-c p p" . helm-projectile-switch-project)
+#   :init (use-package helm-ag)
+#   :config (progn 
+#             (projectile-global-mode t)
+#             (helm-projectile-on)))
+# #+END_SRC
 
 * neotree
 #+BEGIN_SRC emacs-lisp
@@ -89,6 +127,12 @@
 #+BEGIN_SRC emacs-lisp
 ;; Allow one to see matching pairs of parentheses and other characters
 (show-paren-mode 1)
+#+END_SRC
+
+* eldoc
+#+BEGIN_SRC emacs-lisp
+(use-package eldoc
+  :config (global-eldoc-mode))
 #+END_SRC
 
 * exec-path-from-shell
@@ -125,10 +169,12 @@
 
 * evil
 #+BEGIN_SRC emacs-lisp
-;; requires goto-chg and undo-tree
-;; Use C-z to switch among <E> emacs-mode <N> normal-mode <I> insert-mode
-(use-package evil
-  :config (evil-mode 1))
+  ;; requires goto-chg and undo-tree
+  ;; Use C-z to switch among <E> emacs-mode <N> normal-mode <I> insert-mode
+  (use-package evil
+    :config (progn
+              (setq evil-default-state 'emacs)
+              (evil-mode 1)))
 #+END_SRC
 
 * evil-nerd-commenter
@@ -153,10 +199,7 @@
 
 * aggressive-indent  
 #+BEGIN_SRC emacs-lisp
-;; Add the following to :config to avoid this application
-;; (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
-(use-package aggressive-indent
-  :config (global-aggressive-indent-mode 1))
+(use-package aggressive-indent)
 #+END_SRC
 
 * clojure-mode  
@@ -168,6 +211,21 @@
             (add-hook 'clojure-mode-hook 'aggressive-indent-mode)))
 #+END_SRC
 
+* cider
+#+BEGIN_SRC emacs-lisp
+(use-package cider
+  :config (setq cider-repl-display-help-banner nil
+                cider-repl-pop-to-buffer-on-connect nil))
+#+END_SRC
+
+# * inf-clojure
+# #+BEGIN_SRC emacs-lisp
+# (use-package inf-clojure
+#   :config (progn
+#             (setf inf-clojure-tools-deps-cmd '("localhost" . 5555))
+#             (add-hook 'clojure-mode-hook 'inf-clojure-minor-mode)))
+# #+END_SRC
+
 * magit  
 #+BEGIN_SRC emacs-lisp
 (use-package magit
@@ -177,6 +235,7 @@
 * company
 #+BEGIN_SRC emacs-lisp
 (use-package company
+  :bind (("TAB" . company-indent-or-complete-common))
   :config (add-hook 'after-init-hook 'global-company-mode))
 #+END_SRC
 
