@@ -134,12 +134,13 @@
 ** smartparens
 #+BEGIN_SRC emacs-lisp
   (use-package smartparens
-    :bind (:map smartparens-strict-mode-map
-           ("C-<right>" . sp-forward-slurp-sexp)
-           ("C-<left>"  . sp-backward-slurp-sexp)
-           ("M-<right>" . sp-forward-barf-sexp)
-           ("M-<left>"  . sp-backward-barf-sexp))
-    :config (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode))
+    :config (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
+            (bind-keys
+              :map smartparens-strict-mode-map
+              ("C-<right>" . sp-forward-slurp-sexp)
+              ("C-<left>"  . sp-backward-slurp-sexp)
+              ("M-<right>" . sp-forward-barf-sexp)
+              ("M-<left>"  . sp-backward-barf-sexp)))
 #+END_SRC
 
 ** rainbow-delimiters
