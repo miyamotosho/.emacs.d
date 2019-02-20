@@ -106,20 +106,21 @@
 
 ** neotree
 #+BEGIN_SRC emacs-lisp
-(use-package neotree
-  :bind   ("M-n" . neotree-toggle)
-  ;; jump to the current file node on opening
-  :init   (setq neo-smart-open t)
-  :config (progn
-            (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-            (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-            (evil-define-key 'normal neotree-mode-map (kbd "c") 'neotree-create-node)
-            (evil-define-key 'normal neotree-mode-map (kbd "r") 'neotree-rename-node)
-            (evil-define-key 'normal neotree-mode-map (kbd "d") 'neotree-delete-node)
-            (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-            (evil-define-key 'normal neotree-mode-map (kbd "j") 'neotree-next-line)
-            (evil-define-key 'normal neotree-mode-map (kbd "k") 'neotree-previous-line)
-            (evil-define-key 'normal neotree-mode-map (kbd "h") 'neotree-hidden-file-toggle)))
+  (use-package neotree
+    :bind   ("M-n" . neotree-toggle)
+    ;; jump to the current file node on opening
+    :init   (setq neo-smart-open t)
+    ;; :config (progn
+    ;;           (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+    ;;           (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+    ;;           (evil-define-key 'normal neotree-mode-map (kbd "c") 'neotree-create-node)
+    ;;           (evil-define-key 'normal neotree-mode-map (kbd "r") 'neotree-rename-node)
+    ;;           (evil-define-key 'normal neotree-mode-map (kbd "d") 'neotree-delete-node)
+    ;;           (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+    ;;           (evil-define-key 'normal neotree-mode-map (kbd "j") 'neotree-next-line)
+    ;;           (evil-define-key 'normal neotree-mode-map (kbd "k") 'neotree-previous-line)
+    ;;           (evil-define-key 'normal neotree-mode-map (kbd "h") 'neotree-hidden-file-toggle))
+    )
 #+END_SRC
 
 ** exec-path-from-shell
@@ -136,11 +137,13 @@
   (use-package smartparens
     :config (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
             (bind-keys
-              :map smartparens-strict-mode-map
-              ("C-<right>" . sp-forward-slurp-sexp)
-              ("C-<left>"  . sp-backward-slurp-sexp)
-              ("M-<right>" . sp-forward-barf-sexp)
-              ("M-<left>"  . sp-backward-barf-sexp)))
+             :map smartparens-strict-mode-map
+             ("C-M-w" . sp-copy-sexp)
+             ("C-M-t" . sp-transpose-sexp)
+             ("C-<right>" . sp-forward-slurp-sexp)
+             ("C-<left>"  . sp-forward-barf-sexp)
+             ("C-M-<left>" . sp-backward-slurp-sexp)
+             ("C-M-<right>"  . sp-backward-barf-sexp)))
 #+END_SRC
 
 ** rainbow-delimiters
@@ -167,12 +170,24 @@
 #+END_SRC
 
 * Clojure
+** outline
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'outline-minor-mode-hook
+            (lambda ()
+              (local-set-key "\C-c\C-c" outline-mode-prefix-map)))
+  ;; clojure-mode's definition ";;;\\(;* [^ \t\n]\\)\\|("
+  (defun clojure-outline-minor-mode ()
+    (outline-minor-mode 1)
+    (setq-local outline-regexp (rx ";;" space (+ "\*"))))
+#+END_SRC
+
 ** clojure-mode
 #+BEGIN_SRC emacs-lisp
   (use-package clojure-mode
     :config (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
             (add-hook 'clojure-mode-hook 'smartparens-strict-mode)
-            (add-hook 'clojure-mode-hook 'aggressive-indent-mode))
+            (add-hook 'clojure-mode-hook 'aggressive-indent-mode)
+            (add-hook 'clojure-mode-hook 'clojure-outline-minor-mode))
 #+END_SRC
 
 ** cider
@@ -180,6 +195,15 @@
 (use-package cider
   :config (setq cider-repl-display-help-banner nil
                 cider-repl-pop-to-buffer-on-connect nil))
+#+END_SRC
+
+** outshine
+#+BEGIN_SRC emacs-lisp
+    (use-package outshine
+      :bind   ("C-<tab>" . outshine-cycle-buffer)
+      :init   (add-hook 'outline-minor-mode-hook 'outshine-mode)
+      ;; :config (outshine-cycle-buffer)
+  )
 #+END_SRC
 
 * Utility
@@ -213,9 +237,12 @@
 
 * Company
 #+BEGIN_SRC emacs-lisp
-(use-package company
-  :bind (("TAB" . company-indent-or-complete-common))
-  :config (add-hook 'after-init-hook 'global-company-mode))
+  (use-package company
+  ;;  :bind (("TAB" . company-indent-or-complete-common))
+    :config (add-hook 'after-init-hook 'global-company-mode)
+            (bind-keys :map company-active-map
+              ("C-n" . company-select-next)
+              ("C-p" . company-select-previous)))
 #+END_SRC
 
 * Major modes
@@ -277,3 +304,12 @@
     :config   (projectile-global-mode t)
               (helm-projectile-on))
 #+END_SRC
+** Hideshow
+#+BEGIN_SRC emacs-lisp
+  (use-package hideshow
+    :disabled
+    :defer 2
+    :config (hs-minor-mode 1)
+    :bind ("C-c h" . hs-toggle-hiding))
+#+END_SRC
+
