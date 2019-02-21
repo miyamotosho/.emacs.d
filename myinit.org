@@ -86,6 +86,11 @@
             (save-place-mode 1)))
 #+END_SRC
 
+** completion
+#+BEGIN_SRC emacs-lisp
+  (setq completion-cycle-threshold t)
+#+END_SRC
+
 ** recentf
 #+BEGIN_SRC emacs-lisp
 (use-package recentf
@@ -240,6 +245,9 @@
   (use-package company
   ;;  :bind (("TAB" . company-indent-or-complete-common))
     :config (add-hook 'after-init-hook 'global-company-mode)
+            (setq company-idle-delay 0.2 ; default 0.5
+                  company-minimum-prefix-length 3 ; default 4
+                  company-selection-wrap-around t)
             (bind-keys :map company-active-map
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)))
