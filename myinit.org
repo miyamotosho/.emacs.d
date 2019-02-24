@@ -234,10 +234,22 @@
   (use-package uuidgen)
 #+END_SRC
 
-* Magit
+* Git
+** magit
 #+BEGIN_SRC emacs-lisp
 (use-package magit
   :bind (("C-x g" . magit-status)))
+#+END_SRC
+
+** git-gutter
+#+BEGIN_SRC emacs-lisp
+  (use-package git-gutter
+    :init (global-git-gutter-mode +1))
+#+END_SRC
+
+** git-timemachine
+#+BEGIN_SRC emacs-lisp
+  (use-package git-timemachine)
 #+END_SRC
 
 * Company
@@ -245,8 +257,8 @@
   (use-package company
   ;;  :bind (("TAB" . company-indent-or-complete-common))
     :config (add-hook 'after-init-hook 'global-company-mode)
-            (setq company-idle-delay 0.2 ; default 0.5
-                  company-minimum-prefix-length 3 ; default 4
+            (setq company-idle-delay 0.4 ; default 0.5
+                  company-minimum-prefix-length 4 ; default 4
                   company-selection-wrap-around t)
             (bind-keys :map company-active-map
               ("C-n" . company-select-next)
