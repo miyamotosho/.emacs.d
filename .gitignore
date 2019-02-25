@@ -1,10 +1,18 @@
+# directories
 backups/
 savefiles/
 elpa/
 auto-save-list/
 tutorial/
 
+# git-timemachine
+transient/
+
+# buffers
 *~
+
+# el
+init.el
 myinit.el
 .mc-lists.el
 projectile-bookmarks.eld

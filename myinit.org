@@ -54,7 +54,12 @@
   (set-face-attribute 'default nil
                       :height (+ (face-attribute 'default :height) 30))
 #+END_SRC
-
+* Editing
+#+BEGIN_SRC emacs-lisp
+ (use-package swiper
+   :bind (("C-s" . swiper)
+         ("C-r" . swiper)))
+#+END_SRC
 ** fill-column-indicator
 #+BEGIN_SRC emacs-lisp
   (use-package fill-column-indicator
