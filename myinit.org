@@ -20,6 +20,12 @@
 #+END_SRC
 
 * UI
+** windmove
+#+BEGIN_SRC emacs-lisp
+  (when (fboundp 'windmove-default-keybindings)
+    (windmove-default-keybindings))
+#+END_SRC
+
 ** Do not show the startup message
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-message t)

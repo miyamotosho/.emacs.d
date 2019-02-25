@@ -39,7 +39,7 @@
    [default default default italic underline success warning error])
  '(package-selected-packages
    (quote
-    (git-gutter fill-column-indicator neotree zenburn-theme markdown-mode web-mode multiple-cursors uuidgen magit clojure aggressive-indent rainbow-delimiters try which-key exec-path-from-shell use-package smartparens evil-nerd-commenter evil)))
+    (git-timemachine git-gutter fill-column-indicator neotree zenburn-theme markdown-mode web-mode multiple-cursors uuidgen magit clojure aggressive-indent rainbow-delimiters try which-key exec-path-from-shell use-package smartparens evil-nerd-commenter evil)))
  '(safe-local-variable-values (quote ((cider-preferred-build-tool . "clojure-cli")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
