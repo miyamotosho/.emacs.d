@@ -55,10 +55,20 @@
                       :height (+ (face-attribute 'default :height) 30))
 #+END_SRC
 * Editing
+** multiple-cursors
+#+BEGIN_SRC emacs-lisp
+  (use-package multiple-cursors
+    :bind (("C-c m c" . mc/edit-lines)
+           ("C->" . mc/mark-next-like-this)
+           ("C-<" . mc/unmark-next-like-this)
+           ("C-." . mc/mark-all-like-this)))
+#+END_SRC
+
+** swiper
 #+BEGIN_SRC emacs-lisp
  (use-package swiper
    :bind (("C-s" . swiper)
-         ("C-r" . swiper)))
+          ("C-r" . swiper)))
 #+END_SRC
 ** fill-column-indicator
 #+BEGIN_SRC emacs-lisp
@@ -102,6 +112,10 @@
   (setq completion-cycle-threshold t)
 #+END_SRC
 
+** buffer
+#+BEGIN_SRC emacs-lisp
+  (global-set-key "\C-x\C-b" 'buffer-menu-other-window)
+#+END_SRC
 ** recentf
 #+BEGIN_SRC emacs-lisp
 (use-package recentf
@@ -233,11 +247,6 @@
 #+BEGIN_SRC emacs-lisp
 (use-package undo-tree
   :config (global-undo-tree-mode))
-#+END_SRC
-
-** multiple-cursors
-#+BEGIN_SRC emacs-lisp
-  (use-package multiple-cursors)
 #+END_SRC
 
 ** uuidgen
