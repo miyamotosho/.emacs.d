@@ -178,7 +178,8 @@
              ("C-<right>" . sp-forward-slurp-sexp)
              ("C-<left>"  . sp-forward-barf-sexp)
              ("C-M-<left>" . sp-backward-slurp-sexp)
-             ("C-M-<right>"  . sp-backward-barf-sexp)))
+             ("C-M-<right>"  . sp-backward-barf-sexp)
+             ("C-c s" . sp-split-sexp)))
 #+END_SRC
 
 ** rainbow-delimiters
