@@ -144,18 +144,7 @@
   (use-package neotree
     :bind   ("M-n" . neotree-toggle)
     ;; jump to the current file node on opening
-    :init   (setq neo-smart-open t)
-    ;; :config (progn
-    ;;           (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-    ;;           (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-    ;;           (evil-define-key 'normal neotree-mode-map (kbd "c") 'neotree-create-node)
-    ;;           (evil-define-key 'normal neotree-mode-map (kbd "r") 'neotree-rename-node)
-    ;;           (evil-define-key 'normal neotree-mode-map (kbd "d") 'neotree-delete-node)
-    ;;           (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-    ;;           (evil-define-key 'normal neotree-mode-map (kbd "j") 'neotree-next-line)
-    ;;           (evil-define-key 'normal neotree-mode-map (kbd "k") 'neotree-previous-line)
-    ;;           (evil-define-key 'normal neotree-mode-map (kbd "h") 'neotree-hidden-file-toggle))
-    )
+    :init   (setq neo-smart-open t))
 #+END_SRC
 
 ** exec-path-from-shell
