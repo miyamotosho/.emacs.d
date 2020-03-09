@@ -302,6 +302,11 @@
   (use-package markdown-mode)
 #+END_SRC
 
+** terraform-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package terraform-mode)
+#+END_SRC
+
 * Implicit
 ** bind-key
 #+BEGIN_SRC emacs-lisp

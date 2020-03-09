@@ -39,7 +39,7 @@
    [default default default italic underline success warning error])
  '(package-selected-packages
    (quote
-    (swiper git-timemachine git-gutter fill-column-indicator neotree zenburn-theme markdown-mode web-mode multiple-cursors uuidgen magit clojure aggressive-indent rainbow-delimiters try which-key exec-path-from-shell use-package smartparens evil-nerd-commenter evil)))
+    (clojure-mode cider terraform-mode swiper git-timemachine git-gutter fill-column-indicator neotree zenburn-theme markdown-mode web-mode multiple-cursors uuidgen magit clojure aggressive-indent rainbow-delimiters try which-key exec-path-from-shell use-package smartparens evil-nerd-commenter evil)))
  '(safe-local-variable-values (quote ((cider-preferred-build-tool . "clojure-cli")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -47,3 +47,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'downcase-region 'disabled nil)
