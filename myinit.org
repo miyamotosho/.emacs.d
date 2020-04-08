@@ -20,6 +20,12 @@
 #+END_SRC
 
 * UI
+** TODO Mute ring bell
+#+BEGIN_SRC emacs-lisp
+  (setq visible-bell t)
+  (setq ring-bell-function 'ignore)
+#+END_SRC
+
 ** windmove
 #+BEGIN_SRC emacs-lisp
   (when (fboundp 'windmove-default-keybindings)
